@@ -1,16 +1,40 @@
 'use strict';
 
 const STORE = [
-  {name: 'apples', checked: false},
-  {name: 'oranges', checked: false},
-  {name: 'milk', checked: true},
-  {name: 'bread', checked: false},
+  { id: cuid(), name: 'apples', checked: false},
+  { id: cuid(), name: 'oranges', checked: false},
+  { id: cuid(), name: 'milk', checked: true},
+  { id: cuid(), name: 'bread', checked: false},
 ];
 
+function generateItemElement(item) {
+  return `
+    <li data-item-id="${item.id}">
+      <span class="shopping-item js-shopping-item ${item.checked ? "shopping-item__checked" : ''}">${item.name}</span>
+      <div class="shopping-item-controls">
+        <button class="shopping-item-toggle js-item-toggle">
+            <span class="button-label">check</span>
+        </button>
+        <button class="shopping-item-delete js-item-delete">
+            <span class="button-label">delete</span>
+        </button>
+      </div>
+    </li>`;
+}
+
+function generateShoppingItemsString(shoppingList) {
+  console.log("generating shopping list element");
+
+  const items = shoppingList.map((item) => generateItemElement(item));
+  return items.join('');
+}
 function renderShoppingList() {
-  // this function will be responsible for rendering the shopping list in
-  // the DOM
+  // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
+  const shoppingListItemString = generateShoppingItemsString(STORE);
+
+  // isert this html string to the DOM
+  $('.js-shopping-list').html(shoppingListItemString);
 }
 
 
