@@ -79,11 +79,30 @@ function handleItemCheckClicked() {
   });
 }
 
+function removeItemFromStore(itemId) {
+  const item = STORE.find(item => item.id === itemId);
+  STORE.splice(STORE.indexOf(item), 1);
+  // let i = 0;
+  // while (i< STORE.length) {
+  //   if (item === STORE[i]) {
+  //     console.log(i);
+  //     STORE.splice(i, 1);
+  //   }
+  //   i++;
+  // }
+  // This worked before we figured out the issue with the syntax for indexOf
+}
 
 function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
   // item
-  console.log('`handleDeleteItemClicked` ran');
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
+    console.log('`handleDeleteItemClicked` ran');
+    const itemId = getItemIdFromElement(event.currentTarget);
+    removeItemFromStore(itemId);
+    renderShoppingList();
+  })
+
 }
 
 // this function will be our callback when the page loads. it's responsible for
